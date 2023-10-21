@@ -24,12 +24,12 @@ class ActuatorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'actuator_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'status' => 'required',
             ]);
 
         Actuator::create([
-            'name' => $request->name,
+            'actuator_name' => $request->name,
             'status' => $request->status,
             ]);
 
@@ -47,7 +47,7 @@ class ActuatorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'actuator_name' => 'required|string|max:255',            
+            'name' => 'required|string|max:255',            
             'status' => 'required',
             ]);
 

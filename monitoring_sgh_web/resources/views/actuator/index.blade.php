@@ -4,38 +4,36 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('All User') }}
+                {{ __('All Actuator') }}
             </div>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+            <a href="{{ route('actuator.create') }}" class="btn btn-primary">Create Actuators</a>
         </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($actuator as $sen)
                     <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $sen->actuator_name }}</td>
                         <td>
-                            @if($user->role == 0)
-                                <span class="badge badge-primary">Admin</span>
-                            @elseif($user->role == 1)
-                                <span class="badge badge-success">Staff</span>
+                            @if($sen->status == 0)
+                                <span class="badge badge-success">Active</span>
+                            @elseif($sen->status == 1)
+                                <span class="badge badge-danger">Not Active</span>
                             @endif
                         </td>
                         
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-secondary">
+                            <a href="{{ route('actuator.edit', $sen->id) }}" class="btn btn-secondary">
                                 <i class="bi bi-pencil"></i> <!-- Bootstrap Icon -->
                             </a>
 
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
+                            <form action="{{ route('actuator.destroy', $sen->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Are you sure you want to delete this account?')">
                                 @csrf
                                 @method('DELETE')

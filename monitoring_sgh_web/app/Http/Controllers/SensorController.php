@@ -24,11 +24,11 @@ class SensorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'sensor_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             ]);
 
         Sensor::create([
-            'name' => $request->name,
+            'sensor_name' => $request->name,
             ]);
 
         return redirect()->route('sensor.index')->with('success', 'Sensor created successfully');
@@ -45,7 +45,7 @@ class SensorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'sensor_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             ]);
 
         $sensor = Sensor::findOrFail($id);

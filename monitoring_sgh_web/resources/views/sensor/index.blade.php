@@ -3,28 +3,28 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>All Users</h1>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+            <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('All Sensors') }}
+            </div>
+            <a href="{{ route('sensor.create') }}" class="btn btn-primary">Create Sensors</a>
         </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($sensor as $sen)
                     <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $sen->sensor_name }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-secondary">
+                            <a href="{{ route('sensor.edit', $sen->id) }}" class="btn btn-secondary">
                                 <i class="bi bi-pencil"></i> <!-- Bootstrap Icon -->
                             </a>
 
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
+                            <form action="{{ route('sensor.destroy', $sen->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Are you sure you want to delete this account?')">
                                 @csrf
                                 @method('DELETE')

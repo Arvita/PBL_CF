@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_actuator', function (Blueprint $table) {
+        Schema::create('detail_sensors', function (Blueprint $table) {
             $table->id();
-            $table->string('actutator_name');
-            $table->boolean('status');
+            $table->foreignId('id_sensors')->constrained('sensors');
+            $table->double('temp');
+            $table->double('humidity');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_actuator');
+        Schema::dropIfExists('detail_sensors');
     }
 };
