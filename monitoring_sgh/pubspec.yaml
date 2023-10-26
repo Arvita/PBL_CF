@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.3 # For making HTTP requests
+  syncfusion_flutter_gauges: ^20.1.56
+  cookie_jar: 
   shared_preferences: ^2.0.8 # For storing user data locally
   flutter_secure_storage:  # For securely storing sensitive data
 
@@ -62,9 +64,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/sensor_image.png  # Sesuaikan dengan path gambar Anda
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

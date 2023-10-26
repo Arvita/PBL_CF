@@ -1,21 +1,12 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-Future<void> registerUser(String email, String password) async {
-  final response = await http.post(
-    Uri.parse('http://your_api_domain/register'),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
-    }),
-  );
+Future<Map<String, dynamic>> fetchData() async {
+  final response = await http.get(Uri.parse('https://example.com/api/sensors'));
 
   if (response.statusCode == 200) {
-    // User registered successfully
+    return jsonDecode(response.body);
   } else {
-    // Failed to register
+    throw Exception('Failed to load data');
   }
 }
