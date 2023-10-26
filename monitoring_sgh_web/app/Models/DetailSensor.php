@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sensor extends Model
+class DetailSensor extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'sensor_name',
+        'id_sensors','temp','humidity'
     ];
-    public function DetailSensor()
+    public function sensor()
     {
-        return $this->hasMany(DetailSensor::class, 'id_sensors');
+        return $this->belongsTo(Sensor::class, 'id_sensors');
     }
 }
-
-?>

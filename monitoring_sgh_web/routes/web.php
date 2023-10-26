@@ -28,6 +28,8 @@ Route::post('register', 'AuthController@register');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/chart-data', [DashboardController::class, 'getChartData']);
+    Route::post('/update-actuator/{id}', [DashboardController::class, 'updateStatus']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
