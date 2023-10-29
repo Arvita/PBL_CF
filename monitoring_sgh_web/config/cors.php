@@ -15,7 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => [
+        'api/*', 'sanctum/csrf-cookie',
+        'login', // Sesuaikan dengan rute login Anda
+        'logout', // Sesuaikan dengan rute logout Anda (jika ada)
+    ],
 
     'allowed_methods' => ['*'],
 

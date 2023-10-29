@@ -13,11 +13,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $lastThreeSensors = Sensor::latest()->take(2)->with(['DetailSensor' => function ($query) {
+        $lastThreeSensors = Sensor::latest()->with(['DetailSensor' => function ($query) {
             $query->latest();
         }])->get();
 
-        $lastActuator = Actuator::latest()->take(2)->get();
+        $lastActuator = Actuator::latest()->get();
         return view('dashboard', compact('lastThreeSensors', 'lastActuator'));
     }
     public function getChartData()

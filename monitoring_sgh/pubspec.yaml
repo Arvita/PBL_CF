@@ -33,6 +33,7 @@ dependencies:
   http: ^0.13.3 # For making HTTP requests
   syncfusion_flutter_gauges: ^20.1.56
   cookie_jar: 
+  ffi:
   shared_preferences: ^2.0.8 # For storing user data locally
   flutter_secure_storage:  # For securely storing sensitive data
 

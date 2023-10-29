@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
+import 'load_api.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -34,19 +36,29 @@ class _LoginPageState extends State<LoginPage> {
         url,
         headers: {
           'Content-Type': 'application/json',
+          'accept': 'application/json',
           'X-CSRF-TOKEN': csrfToken,
         },
         body: jsonEncode({
-          'username': usernameController.text,
+          'email': usernameController.text,
           'password': passwordController.text,
         }),
       );
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 422) {
+        var data = json.decode(response.body);
+        var errorMessage =
+            data['message']; // Assuming the server returns an error message
+        print('Login failed: $errorMessage');
+      } else if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        var authToken = data['token'];
+        // print(authToken);
         // Autentikasi berhasil
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('username', usernameController.text);
 
+        // Simpan token di sini
+        saveToken(authToken);
         // Navigasi ke halaman beranda atau halaman setelah login
         Navigator.pushReplacementNamed(context, '/home');
       } else {
@@ -54,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
         print('Login gagal, Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Error Login: $e');
     }
   }
 
