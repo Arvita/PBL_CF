@@ -288,13 +288,20 @@ class _ActuatorFragmentState extends State<ActuatorFragment> {
           SizedBox(height: 20),
           Switch(
             value: isSwitched,
-            onChanged: (value) {
+            onChanged: (value) async {
               setState(() {
                 isSwitched = value;
               });
               // Panggil fungsi untuk mengirim status ke API di sini
-              sendStatusToAPI(isSwitched,
-                  id); // Panggil fungsi untuk mengirim status ke API dari api_service.dart
+              bool success = await sendStatusToAPI(isSwitched, id);
+              if (success) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Status successfully updated'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
           ),
         ],

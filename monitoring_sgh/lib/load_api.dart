@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:js';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -53,7 +51,7 @@ Future<String?> getToken() async {
   return prefs.getString('auth_token');
 }
 
-Future<void> sendStatusToAPI(bool isSwitched, int id) async {
+Future<bool> sendStatusToAPI(bool isSwitched, int id) async {
   try {
     String? authToken = await getToken();
     var response = await http.post(
@@ -66,20 +64,16 @@ Future<void> sendStatusToAPI(bool isSwitched, int id) async {
       },
       body: jsonEncode(<String, bool>{'status': isSwitched}),
     );
-
     if (response.statusCode == 200) {
       print('Status berhasil diperbarui');
-      ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-        SnackBar(
-          content: Text('Status berhasil diperbarui'),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      return true; // Indicates success
     } else {
       print('Gagal memperbarui status, Status Code: ${response.statusCode}');
+      return false; // Indicates failure
     }
   } catch (e) {
     print('Error: $e');
+    return false; // Indicates failure
   }
 }
 
