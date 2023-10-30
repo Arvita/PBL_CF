@@ -24,6 +24,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
 Route::middleware(['auth:sanctum'])->group(function () {
-
     Route::get('/sensorValue', [FlutterController::class, 'getLastThreeSensors']);
+    Route::get('/last_actuator_status', [FlutterController::class, 'getLastActuatorStatus']);
+    Route::post('/update_actuator_status/{id}', [FlutterController::class, 'updateActuatorStatus']);
 });

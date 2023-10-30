@@ -16,6 +16,24 @@ class DashboardController extends Controller
         $lastThreeSensors = Sensor::latest()->with(['DetailSensor' => function ($query) {
             $query->latest();
         }])->get();
+        // $sensors = Sensor::with(['DetailSensor' => function($query) {
+        //     $query->latest();
+        // }])->get();
+
+        // $sensorData = [];
+
+        // foreach ($sensors as $sensor) {
+        //     $latestDetailSensor = $sensor->DetailSensor->first(); // Ambil detail sensor terakhir
+
+        //     if ($latestDetailSensor) {
+        //         $sensorData[] = [
+        //             'sensor' => $sensor->sensor_name,
+        //             'temp' => $latestDetailSensor->temp,
+        //         ];
+        //     }
+        // }
+
+        // dd($sensorData);
 
         $lastActuator = Actuator::latest()->get();
         return view('dashboard', compact('lastThreeSensors', 'lastActuator'));
@@ -33,37 +51,19 @@ class DashboardController extends Controller
         foreach ($sensors as $sensor) {
             $sensor_updated_at = [];  // Array untuk menyimpan label
             $sensor_temps = [];       // Array untuk menyimpan data temperatur
-        
+
             foreach ($sensor->DetailSensor as $entry) {
                 // $timestamp = Carbon::parse($entry->updated_at)->format('H:i'); // Ubah format ke 'HH:mm'
                 $timestamp = $entry->updated_at; // Ubah format ke 'HH:mm'
                 $sensor_updated_at[] = $timestamp;
                 $sensor_temps[] = $entry->temp; // Akses kolom temperatur
             }
-        
+
             $data[] = [
                 'label' => $sensor->sensor_name,
                 'data' => array_combine($sensor_updated_at, $sensor_temps)
             ];
         }
-        
-
-
-
-
-
-        // $data = [];
-
-        // foreach ($sensors as $sensor) {
-        //     $sensor_temps = $sensor->DetailSensor->pluck('temp')->toArray();
-        //     $sensor_updated_at = $sensor->DetailSensor->pluck('updated_at')->toArray(); // Menambahkan updated_at
-        //     $data[] = [
-        //         'label' => $sensor->sensor_name,
-        //         'data' => array_combine($sensor_updated_at, $sensor_temps) // Menggabungkan updated_at dan temp
-        //     ];
-        // }
-
-        // dd($data);
 
         return response()->json(['data' => $data]);
     }
@@ -74,7 +74,10 @@ class DashboardController extends Controller
 
         $actuator = Actuator::find($id);
         if ($actuator) {
-            $actuator->status = $status;
+            if ($status == 1)
+                $actuator->status = $status;
+            else
+                $actuator->status = 0;
             $actuator->save();
             return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui'], 200);
         }
