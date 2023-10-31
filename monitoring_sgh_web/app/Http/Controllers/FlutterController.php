@@ -48,7 +48,8 @@ class FlutterController extends Controller
                 'id' => $lastActuator->id
             ]);
         }
-        return response()->json(['message' => 'No actuator found.'], 200);
+        // $actuators = Actuator::all();
+        return response()->json(['message' => 'data berhasil didapatkan.'], 200);
     }
 
     public function updateActuatorStatus(Request $request, $id)

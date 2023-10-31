@@ -16,24 +16,6 @@ class DashboardController extends Controller
         $lastThreeSensors = Sensor::latest()->with(['DetailSensor' => function ($query) {
             $query->latest();
         }])->get();
-        // $sensors = Sensor::with(['DetailSensor' => function($query) {
-        //     $query->latest();
-        // }])->get();
-
-        // $sensorData = [];
-
-        // foreach ($sensors as $sensor) {
-        //     $latestDetailSensor = $sensor->DetailSensor->first(); // Ambil detail sensor terakhir
-
-        //     if ($latestDetailSensor) {
-        //         $sensorData[] = [
-        //             'sensor' => $sensor->sensor_name,
-        //             'temp' => $latestDetailSensor->temp,
-        //         ];
-        //     }
-        // }
-
-        // dd($sensorData);
 
         $lastActuator = Actuator::latest()->get();
         return view('dashboard', compact('lastThreeSensors', 'lastActuator'));
