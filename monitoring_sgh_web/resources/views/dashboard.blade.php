@@ -207,148 +207,6 @@
                 }
             }
         });
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const ctx = document.getElementById('liveChart').getContext('2d');
-        //     let chart;
-
-        //     // Function to update chart data
-        //     function updateChart(labels, datasets) {
-        //         if (chart) {
-        //             chart.destroy(); // Destroy the previous chart instance
-        //         }
-
-        //         chart = new Chart(ctx, {
-        //             type: 'line',
-        //             data: {
-        //                 labels: labels,
-        //                 datasets: datasets
-        //             },
-        //             options: {
-        //                 scales: {
-        //                     x: {
-        //                         type: 'linear',
-        //                         position: 'bottom'
-        //                     },
-        //                     y: {
-        //                         min: 0,
-        //                         max: 100
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //         console.log(chart);
-        //     }
-
-        //     function fetchSensorData() {
-        //         fetch(`/chart-data`)
-        //             .then(response => {
-        //                 if (!response.ok) {
-        //                     throw new Error('Network response was not ok');
-        //                 }
-        //                 return response.json();
-        //             })
-        //             .then(data => {
-        //                 console.log(data);
-        //                 if (Array.isArray(data) && data.length > 0) {
-        //                     const labels = data.map(sensor => sensor.label);
-        //                     const datasets = data.map(sensor => ({
-        //                         label: sensor.label,
-        //                         data: sensor.data,
-        //                         borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-        //                         borderWidth: 1,
-        //                         fill: false
-        //                     }));
-        //                     console.log('Labels:', labels);
-        //                     console.log('Datasets:', datasets);
-
-        //                     alert("REs")
-        //                     updateChart(labels, datasets);
-        //                 } else {
-        //                     console.error('Invalid data format');
-        //                 }
-        //             })
-        //             .catch(error => {
-        //                 console.error('Error fetching data:', error);
-        //             });
-        //     }
-
-
-        //     // Function to fetch sensor data and update the chart
-        //     // function fetchSensorData() {
-        //     //     fetch(`/chart-data`)
-        //     //         .then(response => response.json())
-        //     //         .then(data => {
-        //     //             if (Array.isArray(data) && data.length > 0) {
-        //     //                 const labels = data.map(sensor => sensor.label);
-        //     //                 const datasets = data.map(sensor => ({
-        //     //                     label: sensor.label,
-        //     //                     data: sensor.data,
-        //     //                     borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-        //     //                     borderWidth: 1,
-        //     //                     fill: false
-        //     //                 }));
-        //     //                 updateChart(labels, datasets);
-        //     //             } else {
-        //     //                 console.error('Invalid data format');
-        //     //             }
-        //     //         });
-        //     // }
-
-        //     // Set an interval to update the chart every minute
-        //     setInterval(fetchSensorData, 60000); // 60,000 milliseconds = 1 minute
-        // });
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const ctx = document.getElementById('liveChart').getContext('2d');
-        //     let chart;
-
-        //     function updateChart(labels, datasets) {
-        //         if (chart) {
-        //             chart.destroy();
-        //         }
-
-        //         chart = new Chart(ctx, {
-        //             type: 'line',
-        //             data: {
-        //                 labels: labels,
-        //                 datasets: datasets
-        //             },
-        //             options: {
-        //                 scales: {
-        //                     x: {
-        //                         type: 'linear',
-        //                         position: 'bottom'
-        //                     },
-        //                     y: {
-        //                         min: 0,
-        //                         max: 100
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //     }
-
-        //     function fetchSensorData() {
-        //         fetch(`/chart-data`)
-        //             .then(response => response.json())
-        //             .then(data => {
-        //                 if (data && data.data) {
-        //                     const labels = data.data.map(sensor => sensor.label);
-        //                     const datasets = data.data.map(sensor => ({
-        //                         label: sensor.label,
-        //                         data: sensor.data,
-        //                         borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-        //                         borderWidth: 1,
-        //                         fill: false
-        //                     }));
-        //                     updateChart(labels, datasets);
-        //                 } else {
-        //                     console.error('Invalid data format');
-        //                 }
-        //             });
-        //     }
-
-        //     setInterval(fetchSensorData, 60000);
-        // });
         document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('liveChart').getContext('2d');
             let chart;
@@ -384,20 +242,17 @@
                     .then(data => {
                         console.log(data);
                         if (data && data.data) {
-                            // const labels = Object.keys(data.data[0].data).map(timestamp => moment(timestamp,
-                            //     'YYYY-MM-DD HH:mm').format('HH:mm'));
+                            console.log(typeof data);
 
-                            const allTimestamps = [];
-                            for (const sensor of data.data) {
-                                for (const timestamp in sensor.data) {
-                                    allTimestamps.push(timestamp);
-                                }
-                            }
-
-                            const labels = allTimestamps.map(timestamp => moment(timestamp,
-                                'YYYY-MM-DD HH:mm:ss').format('HH:mm'));
-
-                            console.log(labels);
+                            const lbl = Object.keys(data.data[0].data).map(timestamp => {
+                                const formattedTimestamp = moment(timestamp, 'YYYY-MM-DD HH:mm').format(
+                                    'HH:mm');
+                                console.log(
+                                    `Original Timestamp: ${timestamp}, Formatted Timestamp: ${formattedTimestamp}`
+                                    );
+                                return formattedTimestamp;
+                            });
+                            console.log(lbl);
                             const datasets = data.data.map(sensor => ({
                                 label: sensor.label,
                                 data: Object.values(sensor.data), // Mengambil nilai suhu
@@ -406,9 +261,9 @@
                                 fill: false
                             }));
                             // console.log(datasets);
-                            console.log('Labels:', labels);
+                            console.log('Labels:', lbl);
                             console.log('Datasets:', datasets);
-                            updateChart(datasets, datasets);
+                            updateChart(lbl, datasets);
                         } else {
                             console.error('Invalid data format');
                         }
