@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actuator;
+use App\Models\DetailSensor;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
 
@@ -63,5 +64,19 @@ class FlutterController extends Controller
 
             return response()->json(['message' => 'Status updated successfully']);
         }
+    }
+
+
+    public function storeData(Request $request, $id)
+    {
+        $data = [
+            'humidity' => $request->input('humidity'),
+            'temp' => $request->input('temp'),
+            'id_sensors' => $id,
+        ];
+
+        DetailSensor::create($data);
+
+        return response()->json(['message' => 'Data stored successfully'], 200);
     }
 }

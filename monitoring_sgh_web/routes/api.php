@@ -27,4 +27,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/sensorValue', [FlutterController::class, 'getLastThreeSensors']);
     Route::get('/last_actuator_status', [FlutterController::class, 'getLastActuatorStatus']);
     Route::post('/update_actuator_status/{id}', [FlutterController::class, 'updateActuatorStatus']);
+    Route::post('/sensor1/{id}', [FlutterController::class, 'storeData']);
 });
