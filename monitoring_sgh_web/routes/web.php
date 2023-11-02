@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\ActuatorController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,12 @@ Route::get('/', function () {
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
+
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
 
 
 Route::middleware('auth')->group(function () {

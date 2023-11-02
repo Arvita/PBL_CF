@@ -18,20 +18,6 @@ class _HomePageState extends State<HomePage> {
     _loadSensorValue();
   }
 
-  // Future<void> _loadSensorValue() async {
-  //   try {
-  //     List<dynamic> sensorData = await getSensorValueFromAPI();
-
-  //     double tempValue = sensorData[0];
-  //     String sensorValue = sensorData[1];
-  //     setState(() {
-  //       sensorTemp = tempValue;
-  //       sensorName = sensorValue;
-  //     });
-  //   } catch (e) {
-  //     print('Error: $e');
-  //   }
-  // }
   Future<void> _loadSensorValue() async {
     try {
       List<Map<String, dynamic>> sensorData = await getSensorValueFromAPI();
@@ -60,45 +46,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      // body: SingleChildScrollView(
-      //   child: Center(
-      //     child: Column(
-      //       children: [
-      //         for (var i = 0; i < sensors.length; i += 2)
-      //           LayoutBuilder(
-      //             builder: (BuildContext context, BoxConstraints constraints) {
-      //               return Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //                 children: [
-      //                   Flexible(
-      //                     child: GaugeWidget(
-      //                       sensorValue: sensors[i]['temp'],
-      //                       sensorName: sensors[i]['sensor'],
-      //                     ),
-      //                   ),
-      //                   if (i + 1 < sensors.length &&
-      //                       constraints.maxWidth > 600)
-      //                     Flexible(
-      //                       child: GaugeWidget(
-      //                         sensorValue: sensors[i + 1]['temp'],
-      //                         sensorName: sensors[i + 1]['sensor'],
-      //                       ),
-      //                     ),
-      //                 ],
-      //               );
-      //             },
-      //           ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // body: IndexedStack(
-      //   index: _currentIndex,
-      //   children: <Widget>[
-      //     SensorFragment(), // Fragment untuk Sensor
-      //     ActuatorFragment(), // Fragment untuk Actuator
-      //   ],
-      // ),
       body:
           _buildBody(), // Ganti dengan metode yang mengembalikan body yang sesuai
 
